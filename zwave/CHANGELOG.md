@@ -1,5 +1,59 @@
 # Changelog
 
+## 0.9.1
+
+- Update hardware configuration for Supervisor 2021.02.5
+
+## 0.9.0
+
+- Update OpenZWave to ee90c89
+- Cleanup permissions
+
+## 0.8.0
+
+- Update OpenZWave to 66619ed
+- Update ozw-admin to f68b43e
+
+## 0.7.1
+
+- Fix timezone issue on Alpine
+
+## 0.7.0
+
+- Fix vnc / ozwadmin
+- Update Openzwave to 1c7b620
+- Update qt-openzwave to 7ebd43e2
+
+## 0.6.0
+
+- Fix vnc / ozwadmin
+
+## 0.5.4
+
+- Fix build issues with 32bit CPU
+
+## 0.5.3
+
+- Update Openzwave to 7eaae21
+
+## 0.5.2
+
+- Fix startup failure due to stray OZW Daemon status retained in MQTT
+- Propagate shutdown OZW Daemon status to upstream MQTT on shutdown
+- Update OpenZWave to 6cf3729
+
+## 0.5.1
+
+- Roll-back alpine to 3.11 and qt 5.12
+- Roll-back OpenZWave to 6c2ca613
+
+## 0.5.0
+
+- Update OpenZWave to 5d3978d5
+- Update ozw-admin to da04ebfb
+- Update qt-openzwave to 3ad9138f
+- Update alpine to 3.12
+
 ## 0.4.4
 
 - Update OpenZWave to a35732f
@@ -55,4 +109,4 @@
 
 ## 0.1.0
 
-- Inital release
+- Initial release

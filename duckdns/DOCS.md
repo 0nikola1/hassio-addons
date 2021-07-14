@@ -33,6 +33,14 @@ aliases: []
 seconds: 300
 ```
 
+Additionally, you'll need to configure the Home Assistant Core to pick up the SSL certificates. This is done by setting the following configuration for the [HTTP][HTTP] integration configuration in your `configuration.yaml`:
+
+```yaml
+http:
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+```
+
 ### Option group `lets_encrypt`
 
 The following options are for the option group: `lets_encrypt`. These settings
@@ -62,7 +70,7 @@ IPv4 address manually.
 
 If you specify a URL here, contents of the resource it points to will be
 fetched and used as the address. This enables getting the address using
-a service like https://api4.ipify.org/ or https://ipv4.wtfismyip.com/text
+a service like https://api.ipify.org/ or https://ipv4.text.wtfismyip.com
 
 ### Option: `ipv6` (optional)
 
@@ -72,7 +80,7 @@ IPv6 address manually.
 
 If you specify a URL here, contents of the resource it points to will be
 fetched and used as the address. This enables getting the address using
-a service like https://api6.ipify.org/ or https://ipv6.wtfismyip.com/text
+a service like https://api6.ipify.org/ or https://ipv6.text.wtfismyip.com
 
 ### Option: `token`
 
@@ -93,13 +101,19 @@ For example:
 ```yaml
 domains:
   - my-domain.duckdns.org
-  - ha.my-domain.com
 aliases:
   - domain: ha.my-domain.com
     alias: my-domain.duckdns.org
 ```
 
-Also, add your custom domain name to the `domains` array to create the certificate for both domains
+Don't add your custom domain name to the `domains` array. For certificate creation, all unique domains and aliases are used.
+
+Also, don't forget to make sure the dns-01 challenge can reach Duckdns. It might be required to add a specific CNAME for that:
+
+```
+CNAME _acme-challenge.<own-domain>    _acme-challenge.<domain>.duckdns.org
+CNAME                 <own-domain>                    <domain>.duckdns.org
+```
 
 ### Option: `seconds`
 
@@ -129,5 +143,6 @@ In case you've found a bug, please [open an issue on our GitHub][issue].
 [forum]: https://community.home-assistant.io
 [issue]: https://github.com/home-assistant/hassio-addons/issues
 [reddit]: https://reddit.com/r/homeassistant
-[duckdns]: https://duckdns.org
+[duckdns]: https://www.duckdns.org
 [duckdns-faq]: https://www.duckdns.org/faqs.jsp
+[HTTP]: https://www.home-assistant.io/integrations/http/

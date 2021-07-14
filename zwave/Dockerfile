@@ -8,6 +8,8 @@ ARG QTMQTT_VERSION
 ARG QTOZW_VERSION
 ARG QTOZWADMIN_VERSION
 ARG QTWEBSOCKETS_VERSION
+ARG NOVNC_VERSION
+ARG WEBSOCKIFY_VERSION
 
 # Install QT Open Z-Wave 
 WORKDIR /usr/src
@@ -16,19 +18,18 @@ RUN \
         eudev-libs \
         fontconfig \
         mosquitto \
+        mosquitto-clients \
         openssl \
         pwgen \
         qt5-qtbase \
         qt5-qtremoteobjects \
+        qt5-qtserialport \
         qt5-qtsvg \
         rapidjson \
         ttf-freefont \
-    && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
-        libunwind \
-        libunwind-dev \
-    && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        novnc \
-        websockify \
+        python3 \
+        py3-numpy \
+        net-tools \
     && apk add --no-cache --virtual .build-dependencies \
         binutils \
         build-base \
@@ -40,8 +41,12 @@ RUN \
         openssl-dev \
         qt5-qtbase-dev \
         qt5-qtremoteobjects-dev \
+        qt5-qtserialport-dev \
         qt5-qtsvg-dev \
         rapidjson-dev \
+    && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/v3.12/main \
+        libunwind \
+        libunwind-dev \
     \
     && git clone --depth 1 -b \
         ${QTWEBSOCKETS_VERSION} https://github.com/qt/qtwebsockets /usr/src/qtwebsockets \
@@ -80,7 +85,18 @@ RUN \
     && make -j $(( $(nproc) + 1 )) \
     && make install \
     \
-    && strip --remove-section=.note.ABI-tag /usr/lib/libQt5Core.so \
+    && git clone --depth 1 -b \
+        v${NOVNC_VERSION} https://github.com/novnc/noVNC \
+    && cd noVNC \
+    && mkdir -p /usr/share/novnc \
+    && rm -rf .git utils \
+    && cp -rf ./* /usr/share/novnc/ \
+    \
+    && git clone --depth 1 -b \
+        v${WEBSOCKIFY_VERSION} https://github.com/novnc/websockify \
+    && cd websockify \
+    && python3 setup.py build \
+    && python3 setup.py install --prefix=/usr \
     \
     && mkdir -p /usr/share/OpenZWave \
     && mv /usr/share/qt5/qt-openzwavedatabase.rcc /usr/share/OpenZWave/ \

@@ -6,7 +6,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install deCONZ dependencies
 ARG BUILD_ARCH
-RUN apt-get update \
+RUN \
+    set -x \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
         iproute2 \
@@ -23,6 +25,7 @@ RUN apt-get update \
         lsof \
         netcat \
         nginx \
+        novnc \
         sqlite3 \
         tigervnc-common \
         tigervnc-standalone-server \
@@ -32,32 +35,46 @@ RUN apt-get update \
         xfonts-base \
         xfonts-scalable \
     && rm -rf /var/lib/apt/lists/* \
-    && if [ "${BUILD_ARCH}" = "armhf" ]; \
+    && if [[ "armhf aarch64" = *"$BUILD_ARCH"* ]]; \
         then \
-            curl -q -L -o /wiringpi.deb https://project-downloads.drogon.net/wiringpi-latest.deb \
-            && dpkg -i /wiringpi.deb \
-            && rm -rf /wiringpi.deb; \
+            apt-get update \
+            && apt-get install -y --no-install-recommends \
+                build-essential \
+                git \
+            && git clone --depth 1 https://github.com/WiringPi/WiringPi /usr/src/wiringpi \
+            && cd /usr/src/wiringpi/wiringPi \
+            && make \
+            && make install \
+            && cd ../devLib \
+            && make \
+            && make install \
+            && cd ../gpio \
+            && make \
+            && make install \
+            && apt-get purge -y --auto-remove \
+                build-essential \
+                git \
+            && rm -rf \
+                /var/lib/apt/lists/* \
+                /usr/src/wiringpi; \
         fi
 
 # Install deCONZ
 ARG DECONZ_VERSION
-RUN if [ "${BUILD_ARCH}" = "armhf" ]; \
+RUN \
+    set -x \
+    && if [ "${BUILD_ARCH}" = "armhf" ]; \
         then \
-            curl -q -L -o /deconz.deb http://deconz.dresden-elektronik.de/raspbian/beta/deconz-${DECONZ_VERSION}-qt5.deb; \
+            curl -q -L -o /deconz.deb http://deconz.dresden-elektronik.de/raspbian/stable/deconz-${DECONZ_VERSION}-qt5.deb; \
         elif [ "${BUILD_ARCH}" = "aarch64" ]; \
         then \
-            curl -q -L -o /deconz.deb http://deconz.dresden-elektronik.de/raspbian/alpha/deconz_${DECONZ_VERSION}-debian-stretch-beta_arm64.deb; \
+            curl -q -L -o /deconz.deb http://deconz.dresden-elektronik.de/debian/stable/deconz_${DECONZ_VERSION}-debian-stretch-stable_arm64.deb; \
         else \
-            curl -q -L -o /deconz.deb http://deconz.dresden-elektronik.de/ubuntu/beta/deconz-${DECONZ_VERSION}-qt5.deb; \
+            curl -q -L -o /deconz.deb http://deconz.dresden-elektronik.de/ubuntu/stable/deconz-${DECONZ_VERSION}-qt5.deb; \
         fi \
-    && dpkg -i /deconz.deb \
+    && dpkg --force-all -i /deconz.deb \
     && rm -f /deconz.deb \
     && chown root:root /usr/bin/deCONZ* \
     && sed -i 's/\/root/\/data/' /etc/passwd
 
-COPY data/ika-otau-dl.sh /bin/
-COPY data/ledvance-otau-dl.sh /bin/
-COPY data/nginx.conf /etc/nginx/nginx.conf
-COPY data/run.sh data/discovery.sh /
-
-CMD ["/run.sh"]
+COPY rootfs /

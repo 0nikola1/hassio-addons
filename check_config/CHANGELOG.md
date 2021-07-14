@@ -1,5 +1,36 @@
 # Changelog
 
+## 3.8.0
+
+- Update base image to 2021.07.0
+- Allow using `stable`, `beta` and `dev` as target versions
+- Add translation file for English
+
+## 3.7.1
+
+- Update base image to 2021.04.3
+
+## 3.7.0
+
+- Update base image to 2021.04.2
+- Suppress PIP install output, unless an error occurs
+- Remove udev usage, replaced by uart & usb flag
+- Fix S6 supervisor not listening message
+
+## 3.6.0
+
+- Change to rsync for copy
+- Ignore HA db files
+
+## 3.5.0
+
+- Update base image to version 8.4.0
+- Add media folder
+
+## 3.4.0
+
+- Update base image to version 8.1.0
+
 ## 3.3.0
 
 - Update base image to version 7.2.0

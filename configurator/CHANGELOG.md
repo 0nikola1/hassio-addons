@@ -1,5 +1,26 @@
 # Changelog
 
+## 5.3.2
+
+- Update base image to Alpine 3.14
+
+## 5.3.1
+
+- Update base image to Alpine 3.13
+
+## 5.3.0
+
+- Ignore input-keyword used in blueprints in yaml-linting
+
+## 5.2.0
+
+- Add git option which allows disabling the (default) git initialization
+
+## 5.1.0
+
+- Update base image to Alpine 3.12
+- Add access to new media folder
+
 ## 5.0.0
 
 - Rewrite add-on to S6 Overlay

@@ -1,5 +1,66 @@
 # Changelog
 
+## 9.1.3
+
+- Upgrade Home Assistant CLI to 4.12.3
+
+## 9.1.2
+
+- Upgrade Home Assistant CLI to 4.12.2
+
+## 9.1.1
+
+- Use GitHub Container Registry for the base image
+- Upgrade Home Assistant CLI to 4.12.1
+- Upstream ttyd project now uses the main branch
+
+## 9.1.0
+
+- Upgrade Home Assistant CLI to 4.11.0
+- Support APKs installation on startup
+
+## 9.0.2
+
+- Update options schema for passwords
+
+## 9.0.1
+
+- Upgrade Home Assistant CLI to 4.10.1
+
+## 9.0.0
+
+- Upgrade Alpine Linux to 3.13
+- Update Home Assistant CLI to 4.10.0
+- Use new HA banner on login
+
+## 8.10.0
+
+- Update Home Assistant CLI to 4.9.0
+
+## 8.9.1
+
+- Fix bluez package
+
+## 8.9.0
+
+- Update Home Assistant CLI to 4.4.1
+- Add Bluetooth support
+
+## 8.8.1
+
+- Support new media folder
+
+## 8.8.0
+
+- Update Home Assistant CLI to 4.4.1
+- Wrap system shutdown/reboot to supervisor
+
+## 8.7.0
+
+- Update Home Assistant CLI to 4.4.0
+- Upgrade Alpine Linux to 3.12
+
+
 ## 8.6.0
 
 - Add support for local TCP forwarding
@@ -57,12 +118,4 @@
 - Improve Hass.io API token handling
 - Persist .ssh folder across restarts
 - Add helper symlink folders to user home folder
-
-## 7.1.0
-
-- Update Hass.io CLI to 3.1.1
-
-## 7.0.0
-
-- Added bash_profile as a persistent file
 

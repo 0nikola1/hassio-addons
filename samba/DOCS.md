@@ -11,9 +11,25 @@ Follow these steps to get the add-on installed on your system:
 ## How to use
 
 1. In the configuration section, set a username and password.
+   You can specify any username and password; these are not related in any way to the login credentials you use to log in to Home Assistant or to log in to the computer with which you will use Samba share.
 2. Save the configuration.
 3. Start the add-on.
 4. Check the add-on log output to see the result.
+
+## Connection
+
+If you are on Windows you use `\\<IP_ADDRESS>\`, if you are on MacOS you use `smb://<IP_ADDRESS>` to connect to the shares.
+
+This addon exposes the following directories over smb (samba):
+
+Directory | Description
+-- | --
+`addons` | This is for your local add-ons.
+`backup` | This is for your snapshots.
+`config` | This is for your Home Assistant configuration.
+`media` | This is for local media files.
+`share` | This is for your data that is shared between add-ons and Home Assistant.
+`ssl` | This is for your SSL certificates.
 
 ## Configuration
 
@@ -23,7 +39,6 @@ Add-on configuration:
 workgroup: WORKGROUP
 username: homeassistant
 password: YOUR_PASSWORD
-interface: ''
 allow_hosts:
   - 10.0.0.0/8
   - 172.16.0.0/12
@@ -47,12 +62,6 @@ The username you would like to use to authenticate with the Samba server.
 ### Option: `password` (required)
 
 The password that goes with the username configured for authentication.
-
-### Option: `interface` (required)
-
-The network interface Samba should listen on for incoming connections.
-This option should only be used in advanced cases. In general, setting this
-option is not needed.
 
 ### Option: `allow_hosts` (required)
 

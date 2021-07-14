@@ -1,5 +1,28 @@
 # Changelog
 
+## 9.5.1
+
+- Add `hassio_api` to add-on configuration
+
+## 9.5.0
+
+- Remove interface options in favor of network
+
+## 9.4.0
+
+- Upgrade Alpine Linux to 3.13
+- Rewrite configuration generation code
+
+## 9.3.1
+
+- Update options schema for passwords
+
+## 9.3.0
+
+- Support new media folder
+- Update Samba to 4.12.6
+- Upgrade Alpine Linux to 3.12
+
 ## 9.2.0
 
 - Pin base image version
